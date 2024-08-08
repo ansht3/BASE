@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -5,7 +6,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Website Creator</title>
     <link rel="stylesheet" href="Styles.css"> <!-- Link to external CSS -->
-    <script src="Script.js" defer></script> <!-- Link to external JS -->
     <style>
         body {
             margin: 0;
@@ -14,45 +14,52 @@
             flex-direction: column;
             height: 100vh;
         }
-        .content {
-            flex: 1;
-            padding: 20px;
-            background-color: #983e3e;
-            overflow: auto;
-        }
         .chat-box {
             position: fixed;
             bottom: 0;
             width: 100%;
-            background-color: #ad1919;
-            border-top: 1px solid #ccc;
+            background-color: #545454;
             box-shadow: 0 -2px 10px rgba(0,0,0,0.1);
         }
         .chat-box textarea {
             width: 100%;
-            padding: 10px;
+            padding: 10px 100px 10px 10px;
             border: none;
+            border-radius: 20px;
             resize: none;
             box-sizing: border-box;
             height: 100px;
         }
-        .chat-box button {
+        .chat-box submit-button {
             position: absolute;
             bottom: 10px;
             right: 10px;
+            border-radius: 20px;
             padding: 10px 20px;
             background-color: #333;
             color: #fff;
             border: none;
             cursor: pointer;
         }
-        .login {
+        .hide-button {
+            position: absolute;
+            bottom: 60px;
+            right: 10px;
+            border-radius: 20px;
+            padding: 10px 20px;
+            background-color: #333;
+            color: #fff;
+            border: none;
+            cursor: pointer;
+        }
+        .code-button {
             position: absolute;
             top: 20px;
             right: 20px;
             padding: 10px 20px;
-            background-color: #22c57c;
-            color: #479740;
+            border-radius: 30px;
+            background-color: #ebfff6;
+            color: #000000;
             border: none;
             cursor: pointer;
         }
@@ -66,20 +73,21 @@
     </style>
 
 </head>
-<body>
+<body style="background-color: #545454;">
     <header>
         <h1>insert name here</h1>
     </header>
-    <div class="login">login</div>
+    <button class="code-button" onclick="showCode()">show code</button>
     <div class="content">
         <p>main content area</p>
     </div>
-    <div class="chat-box">
-        <div class="toolbar">
-            test
-        </div>
-        <textarea placeholder="test"></textarea>
-        <button type="button">submit</button>
+    <div class="chat-box" id="chat">
+        <textarea id="chat-text" placeholder="Type your instructions here..."></textarea>
+        <submit-button type="button" onclick="submitChat()">submit</button>
     </div>
+    <button class="hide-button" onclick="hideChat()" id="hide">hide</button>
+    <script src="Script.js" defer></script>
 </body>
 </html>
+
+
