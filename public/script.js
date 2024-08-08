@@ -1,8 +1,19 @@
 import Main from "./main.js";
 import { GoogleGenerativeAI } from "@google/generative-ai";
-const genAI = new GoogleGenerativeAI(process.env.API_KEY);
+
+const key = -1;
+
+fetch("key.txt")
+  .then((res) => res.text())
+  .then((text) => {
+    key = text;
+   })
+  .catch((e) => console.error(e));
+
+const genAI = new GoogleGenerativeAI(key);
 const model = genAI.getGenerativeModel({
   model: "gemini-1.5-flash",
+  system_instruction: "",
   tools: { functionDeclarations: Main.functionDeclarations },
   toolConfig: {
     functionCallingConfig: {
@@ -27,7 +38,9 @@ async function pipeline(prompt) {
   }
 }
 
-document.getElementById("main").addEventListener('submit', (e) => {
-  e.target.value.preventDefault(); 
-  pipeline(document.getElementbyId('main').value); 
-})
+function submitHandler(e) {
+  e.preventDefault();
+  pipeline(document.getElementById('main').value);
+}
+
+document.getElementById("container").addEventListener('submit', submitHandler);

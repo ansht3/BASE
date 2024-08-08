@@ -5,32 +5,32 @@ class Main {
 
   // Naive Approach
   static functionMap = {
-    addTag: ({selection, tag, attributes, styles, text}) => {
+    addTag: ({selection, tag, attributes, /*styles,*/ text}) => {
       const element = d3.selectAll(selection).append(tag);
 
       for (const attribute of attributes) {
         element.attr(attribute, attributes[attribute]);
       }
 
-      for (const style of styles) {
-        element.style(style, styles[style]);
-      }
+      // for (const style of styles) {
+      //   element.style(style, styles[style]);
+      // }
 
       if (text) {
         element.text(text);
       }
     },
 
-    alterTag: ({selection, attributes, styles, text}) => {
+    alterTag: ({selection, /*attributes, styles,*/ text}) => {
       const element = d3.selectAll(selection);
 
-      for (const attribute of attributes) {
-        element.attr(attribute, attributes[attribute]);
-      }
+      // for (const attribute of attributes) {
+      //   element.attr(attribute, attributes[attribute]);
+      // }
 
-      for (const style of styles) {
-        element.style(style, styles[style]);
-      }
+      // for (const style of styles) {
+      //   element.style(style, styles[style]);
+      // }
 
       if (text) {
         element.text(text);
@@ -43,6 +43,7 @@ class Main {
   };
 
   // Elementwise
+  /*
   static elementMap = {
     addDiv: ({selection, styles, text, id, _class}) => {
       const div = d3.selectAll(selection).append("div");
@@ -64,6 +65,7 @@ class Main {
       }
     },
   };
+  */
 
   static functionDeclarations = [
     {
@@ -74,27 +76,30 @@ class Main {
         properties: {
           selection: {
             type: "STRING",
-            description: "CSS selector to append element to. For single selection use id eg '#name', group selection use class eg '.name' and for all tags use just name of tag eg 'div'"
+            description: "CSS selector to append element to. For single selection use id eg #name, group selection use class eg .name and for all tags use just name of tag eg div"
           },
           tag: {
             type: "STRING",
             description: "Name of HTML tag to append eg div"
           },
           attributes: {
-            type: "OBJECT",
-            description: "A JSON object of a list of tag attributes and their specified values eg '{ id: \"main\" }'"
+            type: "ARRAY",
+            description: "A list of JSON objects of tag attributes and their specified values eg '{ id: \"main\" }'",
+            items: "STRING"
           },
+          /*
           styles: {
-            type: "OBJECT",
-            description: "A JSON object of a list of tag styles and their specified values eg '{ color: \"red\" }'"
+            type: "ARRAY",
+            description: "A list of JSON objects of tag styles and their specified values eg '{ color: \"red\" }'"
           },
+          */
           text: {
             type: "STRING",
             description: "The text to be inserted into the newly generated tag"
           }
-        }
-      },
-      required: ["tag", "attributes", "styles", "text"]
+        },
+        required: ["selection", "tag", "attributes", /*"styles",*/ "text"]
+      }
     },
     {
       name: "alterTag",
@@ -104,23 +109,29 @@ class Main {
         properties: {
           selection: {
             type: "STRING",
-            description: "CSS selector to select elements to alter. For single selection use id eg '#name', group selection use class eg '.name' and for all tags use just name of tag eg 'div'"
+            description: "CSS selector to select elements to alter. For single selection use id eg #name, group selection use class eg .name and for all tags use just name of tag eg div"
+          },
+          tag: {
+            type: "STRING",
+            description: "Name of HTML tag to append eg div"
           },
           attributes: {
-            type: "OBJECT",
-            description: "A JSON object of a list of tag attributes and their specified values eg '{ id: \"main\" }'"
+            type: "ARRAY",
+            description: "A list of JSON object tag attributes and their specified values eg '{ id: \"main\" }'"
           },
+          /*
           styles: {
-            type: "OBJECT",
-            description: "A JSON object of a list of tag styles and their specified values eg '{ color: \"red\" }'"
+            type: "ARRAY",
+            description: "A list of JSON object tag styles and their specified values eg '{ color: \"red\" }'"
           },
+          */
           text: {
             type: "STRING",
             description: "The text to replace the selected tag current text"
           }
-        }
-      },
-      required: ["tag", "attributes", "styles", "text"]
+        },
+        required: ["selection", "tag", "attributes", /*"styles",*/ "text"]
+      }
     },
     {
       name: "deleteTag",
@@ -130,9 +141,10 @@ class Main {
         properties: {
           selection: {
             type: "STRING",
-            description: "CSS selector to select elements to delete. For single selection use id eg '#name', group selection use class eg '.name' and for all tags use just name of tag eg 'div'"
+            description: "CSS selector to select elements to delete. For single selection use id eg #name, group selection use class eg .name and for all tags use just name of tag eg div"
           }
-        }
+        },
+        required: ["selection"]
       }
     }
   ];
