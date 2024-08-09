@@ -1,9 +1,9 @@
 import Main from "./main.js";
 import { GoogleGenerativeAI } from "@google/generative-ai";
 
-const key = -1;
+let key = -1;
 
-fetch("key.txt")
+await fetch("key.txt")
   .then((res) => res.text())
   .then((text) => {
     key = text;
@@ -13,11 +13,10 @@ fetch("key.txt")
 const genAI = new GoogleGenerativeAI(key);
 const model = genAI.getGenerativeModel({
   model: "gemini-1.5-flash",
-  system_instruction: "",
   tools: { functionDeclarations: Main.functionDeclarations },
   toolConfig: {
     functionCallingConfig: {
-      mode: "ANY"
+      mode: "AUTO"
     }
   }
 });
@@ -42,5 +41,4 @@ function submitHandler(e) {
   e.preventDefault();
   pipeline(document.getElementById('main').value);
 }
-
 document.getElementById("container").addEventListener('submit', submitHandler);

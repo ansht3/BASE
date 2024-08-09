@@ -3,6 +3,19 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <style>
+      .show-code {
+        position: absolute;
+        top: 10px;
+        right: 10px;
+        border-radius: 20px;
+        padding: 10px 20px;
+        background-color: #333;
+        color: #fff;
+        border: none;
+        cursor: pointer;
+      }
+    </style>
     <script type="importmap">
       {
         "imports": {
@@ -11,8 +24,36 @@
         }
       }
     </script>
+    <script>
+      function showFile() {
+        fetch(window.location.href)
+          .then(response => {
+            return response.text();
+          })
+          .then(text => {
+            document.getElementById("raw-code").value = text;
+          })
+      }
+      
+      function showCode() {
+        var code = document.getElementById("raw-code");
+        var button = document.getElementById("code-button");
+        showFile();
+        if (code.hidden) {
+          code.hidden = false;
+          button.textContent = "Hide Code";
+        }
+        else {
+          code.hidden = true;
+          button.textContent = "Show Code";
+        }
+        console.log("pressed");
+      }
+    </script>
   </head>
   <body>
+    <textarea hidden=true id="raw-code" readonly=true>augh</textarea>
+    <button type="button" id="code-button" class="show-code" onclick="showCode()">Show Code</button>
     <form id="container" style="position: fixed; left: 10%; top: 80%; border-radius: 12px; width: 80%; height: 20px; padding: 10px;
       border-width: 0px; border-style: solid; border-color: gray; z-index: 99; display: flex; align-items: stretch;
       box-shadow: 0px 0px 5px grey;">
@@ -23,6 +64,6 @@
       </button>
     </form>
 
-    <script type="module" src="script.js"></script>
+    <script type="module" src="script.js" defer></script>
   </body>
 </html>

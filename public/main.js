@@ -5,13 +5,13 @@ class Main {
 
   // Naive Approach
   static functionMap = {
-    addTag: ({selection, tag, attributes, /*styles,*/ text}) => {
+    addTag: ({selection, tag, /*attributes,*/ /*styles,*/ text}) => {
       const element = d3.selectAll(selection).append(tag);
-
+      /*
       for (const attribute of attributes) {
         element.attr(attribute, attributes[attribute]);
       }
-
+      */
       // for (const style of styles) {
       //   element.style(style, styles[style]);
       // }
@@ -82,11 +82,13 @@ class Main {
             type: "STRING",
             description: "Name of HTML tag to append eg div"
           },
+          /*
           attributes: {
             type: "ARRAY",
             description: "A list of JSON objects of tag attributes and their specified values eg '{ id: \"main\" }'",
             items: "STRING"
           },
+          */
           /*
           styles: {
             type: "ARRAY",
@@ -98,7 +100,7 @@ class Main {
             description: "The text to be inserted into the newly generated tag"
           }
         },
-        required: ["selection", "tag", "attributes", /*"styles",*/ "text"]
+        required: ["selection", "tag", /*"attributes",*/ /*"styles",*/ "text"]
       }
     },
     {
@@ -115,11 +117,12 @@ class Main {
             type: "STRING",
             description: "Name of HTML tag to append eg div"
           },
+          /*
           attributes: {
             type: "ARRAY",
             description: "A list of JSON object tag attributes and their specified values eg '{ id: \"main\" }'"
           },
-          /*
+          
           styles: {
             type: "ARRAY",
             description: "A list of JSON object tag styles and their specified values eg '{ color: \"red\" }'"
@@ -130,7 +133,7 @@ class Main {
             description: "The text to replace the selected tag current text"
           }
         },
-        required: ["selection", "tag", "attributes", /*"styles",*/ "text"]
+        required: ["selection", "tag", /* "attributes", */ /*"styles",*/ "text"]
       }
     },
     {
