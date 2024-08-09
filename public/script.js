@@ -1,9 +1,8 @@
 import Main from "./main.js";
 import { GoogleGenerativeAI } from "@google/generative-ai";
 
-const key = -1;
-
-fetch("key.txt")
+let key;
+await fetch("key.txt")
   .then((res) => res.text())
   .then((text) => {
     key = text;
@@ -13,11 +12,11 @@ fetch("key.txt")
 const genAI = new GoogleGenerativeAI(key);
 const model = genAI.getGenerativeModel({
   model: "gemini-1.5-flash",
-  system_instruction: "",
+  system_instruction: "You will help develop Web components using HTML, CSS, and Javascript. Only respond in function calls",
   tools: { functionDeclarations: Main.functionDeclarations },
   toolConfig: {
     functionCallingConfig: {
-      mode: "ANY"
+      mode: "AUTO"
     }
   }
 });

@@ -3,13 +3,12 @@ import * as d3 from "d3";
 class Main {
   constructor() {}
 
-  // Naive Approach
   static functionMap = {
     addTag: ({selection, tag, attributes, /*styles,*/ text}) => {
       const element = d3.selectAll(selection).append(tag);
 
       for (const attribute of attributes) {
-        element.attr(attribute, attributes[attribute]);
+        element.attr(attribute.name, attribute.value);
       }
 
       // for (const style of styles) {
@@ -23,6 +22,8 @@ class Main {
 
     alterTag: ({selection, /*attributes, styles,*/ text}) => {
       const element = d3.selectAll(selection);
+
+      // console.log(attributes);
 
       // for (const attribute of attributes) {
       //   element.attr(attribute, attributes[attribute]);
@@ -38,34 +39,9 @@ class Main {
     },
 
     deleteTag: ({selection}) => {
-      d3.selectAll(selection).remove();
+      d3.selectAll(selection).filter(".main").remove();
     }
   };
-
-  // Elementwise
-  /*
-  static elementMap = {
-    addDiv: ({selection, styles, text, id, _class}) => {
-      const div = d3.selectAll(selection).append("div");
-
-      for (const style of styles) {
-        div.style(style, styles[style]);
-      }
-
-      if (text) {
-        div.text(text);
-      }
-
-      if (id) {
-        div.attr("id", id);
-      }
-
-      if (_class) {
-        div.attr("class", _class);
-      }
-    },
-  };
-  */
 
   static functionDeclarations = [
     {
@@ -84,15 +60,26 @@ class Main {
           },
           attributes: {
             type: "ARRAY",
-            description: "A list of JSON objects of tag attributes and their specified values eg '{ id: \"main\" }'",
-            items: "STRING"
+            description: "A list objects for HTML tag attributes and their specified values",
+            items: {
+              description: "object specifying an HTML tag attribute and its value eg {name: 'id', value: 'one'}",
+              type: "OBJECT",
+              properties: {
+                name: {
+                  type: "STRING",
+                  description: "name of the HTML attribute eg id"
+                },
+                value: {
+                  type: "STRING",
+                  description: "value of the corresponding HTML attribute"
+                }
+              }
+            }
           },
-          /*
-          styles: {
-            type: "ARRAY",
-            description: "A list of JSON objects of tag styles and their specified values eg '{ color: \"red\" }'"
-          },
-          */
+          // styles: {
+          //   type: "ARRAY",
+          //   description: "A list of JSON objects of tag styles and their specified values eg '{ color: \"red\" }'"
+          // },
           text: {
             type: "STRING",
             description: "The text to be inserted into the newly generated tag"
@@ -115,22 +102,34 @@ class Main {
             type: "STRING",
             description: "Name of HTML tag to append eg div"
           },
-          attributes: {
-            type: "ARRAY",
-            description: "A list of JSON object tag attributes and their specified values eg '{ id: \"main\" }'"
-          },
-          /*
-          styles: {
-            type: "ARRAY",
-            description: "A list of JSON object tag styles and their specified values eg '{ color: \"red\" }'"
-          },
-          */
+          // attributes: {
+          //   type: "ARRAY",
+          //   description: "A list objects for HTML tag attributes and their specified values",
+          //   items: {
+          //     description: "object specifying an HTML tag attribute and its value eg {name: 'id', value: 'one'}",
+          //     type: "OBJECT",
+          //     properties: {
+          //       name: {
+          //         type: "STRING",
+          //         description: "name of the HTML attribute eg id"
+          //       },
+          //       value: {
+          //         type: "STRING",
+          //         description: "value of the corresponding HTML attribute"
+          //       }
+          //     }
+          //   }
+          // },
+          // styles: {
+          //   type: "ARRAY",
+          //   description: "A list of JSON object tag styles and their specified values eg '{ color: \"red\" }'"
+          // },
           text: {
             type: "STRING",
             description: "The text to replace the selected tag current text"
           }
         },
-        required: ["selection", "tag", "attributes", /*"styles",*/ "text"]
+        required: ["selection", "tag", /*"attributes", "styles",*/ "text"]
       }
     },
     {
