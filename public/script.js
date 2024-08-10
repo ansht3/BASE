@@ -28,7 +28,7 @@ async function pipeline(prompt) {
   const calls = result.response.functionCalls();
   console.log(calls);
 
-  if (calls.length > 0) {
+  if (calls) {
     for (const call of calls) {
       Main.functionMap[call.name](call.args);
     }

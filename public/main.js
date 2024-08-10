@@ -86,7 +86,7 @@ class Main {
             description: "The text to be inserted into the newly generated tag"
           }
         },
-        required: ["selection", "tag", /*"attributes",*/ /*"styles",*/ "text"]
+        required: ["selection", "tag", "attributes", /*"styles",*/ "text"]
       }
     },
     {
