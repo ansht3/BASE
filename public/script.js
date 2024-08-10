@@ -2,6 +2,7 @@ import Main from "./main.js";
 import { GoogleGenerativeAI } from "@google/generative-ai";
 
 let key;
+
 await fetch("key.txt")
   .then((res) => res.text())
   .then((text) => {
@@ -41,5 +42,4 @@ function submitHandler(e) {
   e.preventDefault();
   pipeline(document.getElementById('main').value);
 }
-
 document.getElementById("container").addEventListener('submit', submitHandler);

@@ -4,13 +4,12 @@ class Main {
   constructor() {}
 
   static functionMap = {
-    addTag: ({selection, tag, attributes, /*styles,*/ text}) => {
+    addTag: ({selection, tag, attributes,/*styles,*/ text}) => {
       const element = d3.selectAll(selection).append(tag);
 
       for (const attribute of attributes) {
         element.attr(attribute.name, attribute.value);
       }
-
       // for (const style of styles) {
       //   element.style(style, styles[style]);
       // }
@@ -76,16 +75,18 @@ class Main {
               }
             }
           },
-          // styles: {
-          //   type: "ARRAY",
-          //   description: "A list of JSON objects of tag styles and their specified values eg '{ color: \"red\" }'"
-          // },
+          /*
+          styles: {
+            type: "ARRAY",
+            description: "A list of JSON objects of tag styles and their specified values eg '{ color: \"red\" }'"
+          },
+          */
           text: {
             type: "STRING",
             description: "The text to be inserted into the newly generated tag"
           }
         },
-        required: ["selection", "tag", "attributes", /*"styles",*/ "text"]
+        required: ["selection", "tag", /*"attributes",*/ /*"styles",*/ "text"]
       }
     },
     {
