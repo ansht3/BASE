@@ -3,30 +3,6 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <style>
-      .show-code {
-        position: absolute;
-        top: 10px;
-        right: 10px;
-        border-radius: 20px;
-        padding: 10px 20px;
-        background-color: #333;
-        color: #fff;
-        border: none;
-        cursor: pointer;
-      }
-      .copy-code {
-        position: absolute;
-        top: 50px;
-        right: 10px;
-        border-radius: 20px;
-        padding: 10px 20px;
-        background-color: #333;
-        color: #fff;
-        border: none;
-        cursor: pointer;
-      }
-    </style>
     <script type="importmap">
       {
         "imports": {
@@ -35,48 +11,11 @@
         }
       }
     </script>
-    <script>
-      function showFile() {
-        fetch(window.location.href)
-          .then(response => {
-            return response.text();
-          })
-          .then(text => {
-            document.getElementById("raw-code").value = text;
-          })
-      }
-      function copyCode() {
-        var code = document.getElementById("raw-code");
-        var copy = document.getElementById("copy-button");
-        copy.textContent = "Copied!";
-        code.select();
-        navigator.clipboard.writeText(code.value);
-      }
-      function showCode() {
-        var code = document.getElementById("raw-code");
-        var button = document.getElementById("code-button");
-        var copy = document.getElementById("copy-button");
-        showFile();
-        if (code.hidden) {
-          code.hidden = false;
-          copy.hidden = false;
-          button.textContent = "Hide Code";
-        }
-        else {
-          code.hidden = true;
-          copy.hidden = true;
-          copy.textContent = "Copy Code";
-          button.textContent = "Show Code";
-        }
-        console.log("pressed");
-      }
-    </script>
   </head>
   <body>
     <textarea hidden=true id="raw-code" readonly=true style="width: 50vw; height: 60vh;">augh</textarea>
-    <button type="button" id="code-button" class="show-code" onclick="showCode()">Show Code</button>
-    <button type="button" hidden=true id="copy-button" class="copy-code" onclick="copyCode()">Copy Code</button>
-
+    <button type="button" id="code-button" style="position: absolute; top: 10px; right: 10px; border-radius: 20px; padding: 10px 20px; background-color: #333; color: #fff; border: none; cursor: pointer;">Show Code</button>
+    <button type="button" id="copy-button" hidden="true" style="position: absolute; top: 50px; right: 10px; border-radius: 20px; padding: 10px 20px; background-color: #333; color: #fff; border: none; cursor: pointer;">Copy Code</button>
     <form id="container" class="main" style="position: fixed; left: 10%; top: 80%; border-radius: 12px; width: 80%; height: 20px; padding: 10px;
       border-width: 0px; border-style: solid; border-color: gray; z-index: 99; display: flex; align-items: stretch;
       box-shadow: 0px 0px 5px grey;">
@@ -88,6 +27,5 @@
     </form>
 
     <script type="module" src="script.js" defer></script>
-    <script type="module" src="firebase.js" defer></script>
   </body>
 </html>

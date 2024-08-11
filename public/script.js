@@ -37,9 +37,47 @@ async function pipeline(prompt) {
     Main.noFunction();
   }
 }
-
 function submitHandler(e) {
   e.preventDefault();
   pipeline(document.getElementById('main').value);
 }
+
+function copyCode() {
+  var code = document.getElementById("raw-code");
+  var copy = document.getElementById("copy-button");
+  copy.textContent = "Copied!";
+  code.select();
+  navigator.clipboard.writeText(code.value);
+}
+function showFile() {
+  fetch(window.location.href)
+    .then(response => {
+      return response.text();
+    })
+    .then(text => {
+      document.getElementById("raw-code").value = text;
+    })
+}
+function showCode() {
+  var code = document.getElementById("raw-code");
+  var button = document.getElementById("code-button");
+  var copy = document.getElementById("copy-button");
+  showFile();
+  if (code.hidden) {
+    code.hidden = false;
+    copy.hidden = false;
+    button.textContent = "Hide Code";
+  }
+  else {
+    code.hidden = true;
+    copy.hidden = true;
+    copy.textContent = "Copy Code";
+    button.textContent = "Show Code";
+  }
+  console.log("pressed");
+}
+
+document.getElementById("code-button").addEventListener('click', showCode);
+document.getElementById("copy-button").addEventListener('click', copyCode);
 document.getElementById("container").addEventListener('submit', submitHandler);
+
