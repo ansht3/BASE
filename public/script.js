@@ -55,22 +55,29 @@ function showFile() {
       return response.text();
     })
     .then(text => {
-      document.getElementById("raw-code").value = text;
+      const cut1 = text.indexOf("  <!-- Code injected by live-server -->");
+      const end = "// ]]>\n</script>\n";
+      const cut2 = text.indexOf(end);
+      const result = text.substring(0, cut1) + text.substring(cut2 + end.length);
+      document.getElementById("raw-code").value = result;
     })
 }
 function showCode() {
   var code = document.getElementById("raw-code");
   var button = document.getElementById("code-button");
   var copy = document.getElementById("copy-button");
+  var undo = document.getElementById("undo-button");
   showFile();
   if (code.hidden) {
     code.hidden = false;
     copy.hidden = false;
+    undo.hidden = true;
     button.textContent = "Hide Code";
   }
   else {
     code.hidden = true;
     copy.hidden = true;
+    undo.hidden = false;
     copy.textContent = "Copy Code";
     button.textContent = "Show Code";
   }
