@@ -13,15 +13,15 @@
     </script>
   </head>
   <body>
-    <textarea hidden=true id="raw-code" readonly=true style="width: 50vw; height: 60vh;">augh</textarea>
-    <button type="button" id="code-button" style="position: absolute; top: 10px; right: 10px; border-radius: 20px; padding: 10px 20px; background-color: #333; color: #fff; border: none; cursor: pointer;">Show Code</button>
-    <button type="button" id="copy-button" hidden="true" style="position: absolute; top: 50px; right: 10px; border-radius: 20px; padding: 10px 20px; background-color: #333; color: #fff; border: none; cursor: pointer;">Copy Code</button>
+    <textarea hidden=true id="raw-code" readonly=true style="width: 50vw; height: 60vh;"></textarea>
+    <button type="button" id="code-button" class="main" style="position: absolute; top: 10px; right: 10px; border-radius: 20px; padding: 10px 20px; background-color: #333; color: #fff; border: none; cursor: pointer;">Show Code</button>
+    <button type="button" id="copy-button" class="main" hidden="true" style="position: absolute; top: 50px; right: 10px; border-radius: 20px; padding: 10px 20px; background-color: #333; color: #fff; border: none; cursor: pointer;">Copy Code</button>
     <form id="container" class="main" style="position: fixed; left: 10%; top: 80%; border-radius: 12px; width: 80%; height: 20px; padding: 10px;
       border-width: 0px; border-style: solid; border-color: gray; z-index: 99; display: flex; align-items: stretch;
       box-shadow: 0px 0px 5px grey;">
-      <input type="text" id="main" name="main" value="" placeholder="Insert or Change Elements"
+      <input type="text" id="main" class="main" name="main" value="" placeholder="Insert or Change Elements"
       style="border: none; outline: none; width: 100%;">
-      <button type="submit" style="border: none; background: none">
+      <button type="submit" class="main" style="border: none; background: none">
         <img src="./assets/circle-up-solid.svg" alt="push-button" style="height: 20px; width: 20px">
       </button>
     </form>
