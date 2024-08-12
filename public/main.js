@@ -6,7 +6,7 @@ class Main {
   static counter = 0;
 
   static functionMap = {
-    addTag: ({selection, tag, attributes, text, styles}) => {
+    addTag: ({selection, tag, attributes, styles, text}) => {
       const element = d3.selectAll(selection).append(tag);
 
       for (const attribute of attributes) {
@@ -20,6 +20,7 @@ class Main {
       if (text) {
         element.text(text);
       }
+      counter++;
     },
 
     alterText: ({selection, text}) => {
@@ -107,7 +108,7 @@ class Main {
             description: "The text to be inserted into the newly generated tag"
           }
         },
-        required: ["selection", "tag", "attributes", "text", "styles"]
+        required: ["selection", "tag", "attributes", "styles", "text"]
       }
     },
     {
