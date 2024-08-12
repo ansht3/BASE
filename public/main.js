@@ -22,6 +22,27 @@ class Main {
       }
     },
 
+    onHover: ({selection, styles}) => {
+      const element = d3.selectAll(selection);
+
+      const oldStyles = []
+      for (const style of styles) {
+        oldStyles.push([style.name, element.style(style.name)]);
+      }
+
+      element.on('mouseover', () => {
+        for (const style of styles) {
+          element.style(style.name, style.value);
+        }
+      });
+
+      element.on('mouseout', () => {
+        for (const style of oldStyles) {
+          element.style(style[0], style[1]);
+        }
+      });
+    },
+
     alterText: ({selection, text}) => {
       const element = d3.selectAll(selection);
 
@@ -60,7 +81,7 @@ class Main {
         properties: {
           selection: {
             type: "STRING",
-            description: "CSS selector to append element to. For single selection use id eg #name, group selection use class eg .name and for all tags use just name of tag eg div"
+            description: "CSS selector to append element to. For single selection use id eg #name, group selection use class eg .name and for all tags use just name of tag eg div. If none is specified, default to body"
           },
           tag: {
             type: "STRING",
@@ -111,6 +132,38 @@ class Main {
       }
     },
     {
+      name: "onHover",
+      parameters: {
+        type: "OBJECT",
+        description: "Select HTML tag or tags based on a CSS selector and add hover styling",
+        properties: {
+          selection: {
+            type: "STRING",
+            description: "CSS selection to select elements to add hover styling. For single selection use id eg #name, group selection use class eg .name and for all tags use name of tag eg div"
+          },
+          styles: {
+            type: "ARRAY",
+            description: "Array of objects for HTML tag styles and their specified values",
+            items: {
+              description: "Object specifying a CSS style name and its value eg {name: 'color', value: 'red'}",
+              type: "OBJECT",
+              properties: {
+                name: {
+                  type: "STRING",
+                  description: "Name of the CSS style eg color"
+                },
+                value: {
+                  type: "STRING",
+                  description: "Value of the corresponding CSS style"
+                }
+              }
+            }
+          }
+        },
+        required: ["selection", "styles"]
+      }
+    },
+    {
       name: "alterText",
       parameters: {
         type: "OBJECT",
@@ -120,34 +173,76 @@ class Main {
             type: "STRING",
             description: "CSS selector to select elements to alter. For single selection use id eg #name, group selection use class eg .name and for all tags use name of tag eg div"
           },
-          // attributes: {
-          //   type: "ARRAY",
-          //   description: "A list objects for HTML tag attributes and their specified values",
-          //   items: {
-          //     description: "object specifying an HTML tag attribute and its value eg {name: 'id', value: 'one'}",
-          //     type: "OBJECT",
-          //     properties: {
-          //       name: {
-          //         type: "STRING",
-          //         description: "name of the HTML attribute eg id"
-          //       },
-          //       value: {
-          //         type: "STRING",
-          //         description: "value of the corresponding HTML attribute"
-          //       }
-          //     }
-          //   }
-          // },
-          // styles: {
-          //   type: "ARRAY",
-          //   description: "A list of JSON object tag styles and their specified values eg '{ color: \"red\" }'"
-          // },
           text: {
             type: "STRING",
             description: "The text to replace the selected tag current text"
           }
         },
         required: ["selection", "text"]
+      }
+    },
+    {
+      name: "alterAttribute",
+      parameters: {
+        type: "OBJECT",
+        description: "Select HTML tag or tags based on CSS selector to alter attributes",
+        properties: {
+          selection: {
+            type: "STRING",
+            description: "CSS selector to select elements to alter. For single selection use id eg #name, group selection use class eg .name and for all tags use the name of tag eg div"
+          },
+          attributes: {
+            type: "ARRAY",
+            description: "A list objects for HTML tag attributes and their specified values",
+            items: {
+              description: "object specifying an HTML tag attribute and its value eg {name: 'id', value: 'one'}",
+              type: "OBJECT",
+              properties: {
+                name: {
+                  type: "STRING",
+                  description: "name of the HTML attribute eg id"
+                },
+                value: {
+                  type: "STRING",
+                  description: "value of the corresponding HTML attribute"
+                }
+              }
+            }
+          }
+        },
+        required: ["selection", "attributes"]
+      }
+    },
+    {
+      name: "alterStyle",
+      parameters: {
+        type: "OBJECT",
+        description: "Select HTML tag or tags based on a CSS selector to alter styles",
+        properties: {
+          selection: {
+            type: "STRING",
+            description: "CSS selector to select elements to alter. For single selection use id eg #name, group selection use class eg .name and for all tags use name of tag eg div"
+          },
+          styles: {
+            type: "ARRAY",
+            description: "Array of objects for HTML tag styles and their specified values",
+            items: {
+              description: "Object specifying a CSS style name and its value eg {name: 'color', value: 'red'}",
+              type: "OBJECT",
+              properties: {
+                name: {
+                  type: "STRING",
+                  description: "Name of the CSS style eg color"
+                },
+                value: {
+                  type: "STRING",
+                  description: "Value of the corresponding CSS style"
+                }
+              }
+            }
+          }
+        },
+        required: ["selection", "styles"]
       }
     },
     {
@@ -158,7 +253,7 @@ class Main {
         properties: {
           selection: {
             type: "STRING",
-            description: "CSS selector to select elements to delete. For single selection use id eg #name, group selection use class eg .name and for all tags use just name of tag eg div"
+            description: "CSS selector to select elements to delete. For single selection use id eg #name, group selection use class eg .name and for all tags use name of tag eg div"
           }
         },
         required: ["selection"]

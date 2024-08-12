@@ -77,15 +77,6 @@ function showCode() {
   console.log("pressed");
 }
 
-function undo() {
-  Main.functionMap["deleteTag"]("." + Main.counter.toString());
-  if (Main.counter > 0) {
-    Main.counter--;
-  }
-}
-
 document.getElementById("code-button").addEventListener('click', showCode);
 document.getElementById("copy-button").addEventListener('click', copyCode);
 document.getElementById("container").addEventListener('submit', submitHandler);
-document.getElementById("undo-button").addEventListener('click', undo);
-
