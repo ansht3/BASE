@@ -3,8 +3,10 @@ import * as d3 from "d3";
 class Main {
   constructor() {}
 
+  static counter = 0;
+
   static functionMap = {
-    addTag: ({selection, tag, attributes, styles, text}) => {
+    addTag: ({selection, tag, attributes, text, styles}) => {
       const element = d3.selectAll(selection).append(tag);
 
       for (const attribute of attributes) {
@@ -105,7 +107,7 @@ class Main {
             description: "The text to be inserted into the newly generated tag"
           }
         },
-        required: ["selection", "tag", "attributes", "styles", "text"]
+        required: ["selection", "tag", "attributes", "text", "styles"]
       }
     },
     {
