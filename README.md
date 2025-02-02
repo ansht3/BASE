@@ -1,7 +1,6 @@
 # BASE: Website Component Builder
 
-BASE is an intuitive web application that allows users to create, design, and manage different components of a website with minimal effort. By simply prompting the system, users can generate portions of the frontend, enabling the creation of an entire website with ease. Whether you're an experienced designer or just starting, BASE makes building websites accessible to everyone.
-=
+###BASE is an intuitive web application that allows users to create, design, and manage different components of a website with minimal effort. By simply prompting the system, users can generate portions of the frontend, enabling the creation of an entire website with ease. Whether you're an experienced designer or just starting, BASE makes building websites accessible to everyone.
 
 ## Inspiration
 
