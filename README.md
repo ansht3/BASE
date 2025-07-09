@@ -11,13 +11,13 @@ Inspired by the simplicity and intuitiveness of Figma, BASE aims to lower the en
 - **A tool for everyone**: Whether you're a novice designer or a seasoned developer, BASE helps you build websites with minimal hassle.
 - **User-friendly experience**: BASE simplifies the process of website creation, allowing anyone to build a website with confidence.
 
-
 ## Tech Stack
+
 - Javascript
 - React
 - Python
-- Microsoft Azure
-- Azure AI
+- OpenAI API
+- GPT-4o-mini
 
 ## Features
 
@@ -56,31 +56,35 @@ To set up BASE on your local machine, follow these instructions:
    ```bash
    git clone https://github.com/yourusername/BASE.git
 
+   ```
+
 2. **Navigate to directory**:
 
    ```bash
    cd BASE
+
+   ```
 
 3. **Install dependencies**:
 
    ```bash
    npm install --force
 
+   ```
+
 4. **Deploy the application**:
 
    ```bash
    npm run start
+   ```
 
 ## Application
 
 With BASE, building websites is no longer a daunting task. Whether you're just starting or you're a seasoned pro, BASE's intuitive system allows you to focus on creativity, not complexity. Let your ideas come to life, one component at a time!
 
 ## Future
+
 - Create a element manager to control structure with which elements are being added and allow users to preview changes.
 - Allow third-party API integrations to add further layer of application.
 
 Also, feel free to check out the BASE.pdf presentation for more information about our application.
-
-
-
-

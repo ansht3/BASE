@@ -1,30 +1,142 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
     <script type="importmap">
       {
         "imports": {
-          "@google/generative-ai": "https://esm.run/@google/generative-ai",
-          "d3": "https://cdn.jsdelivr.net/npm/d3@7/+esm" 
+          "openai": "https://esm.run/openai@4.28.0",
+          "d3": "https://cdn.jsdelivr.net/npm/d3@7/+esm"
         }
       }
     </script>
+    <style>
+      .status-indicator {
+        position: fixed;
+        top: 10px;
+        left: 10px;
+        padding: 5px 10px;
+        border-radius: 5px;
+        font-size: 12px;
+        font-weight: bold;
+        z-index: 1000;
+      }
+      .status-ok {
+        background-color: #4caf50;
+        color: white;
+      }
+      .status-error {
+        background-color: #f44336;
+        color: white;
+      }
+      .status-demo {
+        background-color: #ff9800;
+        color: white;
+      }
+    </style>
   </head>
   <body>
-    <textarea hidden=true id="raw-code" class="main" readonly=true style="width: 50vw; height: 60vh;"></textarea>
-    <button type="button" id="code-button" class="main" style="position: absolute; top: 10px; right: 10px; border-radius: 20px; padding: 10px 20px; background-color: #333; color: #fff; border: none; cursor: pointer;">Show Code</button>
-    <button type="button" id="copy-button" class="main" hidden="true" style="position: absolute; top: 50px; right: 10px; border-radius: 20px; padding: 10px 20px; background-color: #333; color: #fff; border: none; cursor: pointer;">Copy Code</button>
-    <button type="button" id="undo-button" class="main" style="position: absolute; top: 50px; right: 10px; border-radius: 20px; padding: 10px 20px; background-color: #333; color: #fff; border: none; cursor: pointer;">Undo</button>
+    <div id="status" class="status-indicator status-error">Checking API...</div>
 
-    <form id="container" class="main" style="position: fixed; left: 10%; top: 80%; border-radius: 12px; width: 80%; height: 20px; padding: 10px;
-      border-width: 0px; border-style: solid; border-color: gray; z-index: 99; display: flex; align-items: stretch;
-      box-shadow: 0px 0px 5px grey;">
-      <input type="text" id="main" class="main" name="main" value="" placeholder="Insert or Change Elements"
-      style="border: none; outline: none; width: 100%;">
+    <textarea
+      hidden="true"
+      id="raw-code"
+      class="main"
+      readonly="true"
+      style="width: 50vw; height: 60vh"
+    ></textarea>
+    <button
+      type="button"
+      id="code-button"
+      class="main"
+      style="
+        position: absolute;
+        top: 10px;
+        right: 10px;
+        border-radius: 20px;
+        padding: 10px 20px;
+        background-color: #333;
+        color: #fff;
+        border: none;
+        cursor: pointer;
+      "
+    >
+      Show Code
+    </button>
+    <button
+      type="button"
+      id="copy-button"
+      class="main"
+      hidden="true"
+      style="
+        position: absolute;
+        top: 50px;
+        right: 10px;
+        border-radius: 20px;
+        padding: 10px 20px;
+        background-color: #333;
+        color: #fff;
+        border: none;
+        cursor: pointer;
+      "
+    >
+      Copy Code
+    </button>
+    <button
+      type="button"
+      id="undo-button"
+      class="main"
+      style="
+        position: absolute;
+        top: 50px;
+        right: 10px;
+        border-radius: 20px;
+        padding: 10px 20px;
+        background-color: #333;
+        color: #fff;
+        border: none;
+        cursor: pointer;
+      "
+    >
+      Undo
+    </button>
+
+    <form
+      id="container"
+      class="main"
+      style="
+        position: fixed;
+        left: 10%;
+        top: 80%;
+        border-radius: 12px;
+        width: 80%;
+        height: 20px;
+        padding: 10px;
+        border-width: 0px;
+        border-style: solid;
+        border-color: gray;
+        z-index: 99;
+        display: flex;
+        align-items: stretch;
+        box-shadow: 0px 0px 5px grey;
+      "
+    >
+      <input
+        type="text"
+        id="main"
+        class="main"
+        name="main"
+        value=""
+        placeholder="Insert or Change Elements"
+        style="border: none; outline: none; width: 100%"
+      />
       <button type="submit" class="main" style="border: none; background: none">
-        <img src="./assets/circle-up-solid.svg" alt="push-button" style="height: 20px; width: 20px">
+        <img
+          src="./assets/circle-up-solid.svg"
+          alt="push-button"
+          style="height: 20px; width: 20px"
+        />
       </button>
     </form>
     <script type="module" src="script.js" defer></script>

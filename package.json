@@ -1,5 +1,9 @@
 {
+  "scripts": {
+    "start": "live-server public --port=3000 --open"
+  },
   "dependencies": {
-    "live-server": "^1.2.2"
+    "live-server": "^1.2.2",
+    "openai": "^4.28.0"
   }
 }

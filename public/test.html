@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>BASE Test</title>
+  </head>
+  <body>
+    <h1>BASE OpenAI API Test</h1>
+    <p>Open the browser console (F12) and try typing a prompt like:</p>
+    <ul>
+      <li>"Add a red button with text 'Click me'"</li>
+      <li>"Create a blue div with text 'Hello World'"</li>
+      <li>"Add a green paragraph with text 'This is a test'"</li>
+    </ul>
+
+    <div
+      id="test-area"
+      style="border: 1px solid #ccc; padding: 20px; margin: 20px"
+    >
+      <p>Test area - elements will be added here</p>
+    </div>
+
+    <form id="test-form">
+      <input
+        type="text"
+        id="test-input"
+        placeholder="Enter your prompt here..."
+        style="width: 300px; padding: 10px"
+      />
+      <button type="submit">Test</button>
+    </form>
+
+    <script type="module">
+      import Main from "./main.js";
+      import OpenAI from "openai";
+
+      let key;
+      await fetch("key.txt")
+        .then((res) => res.text())
+        .then((text) => {
+          key = text.trim();
+          console.log("API Key loaded:", key ? "Yes" : "No");
+        })
+        .catch((e) => console.error("Error loading API key:", e));
+
+      if (!key) {
+        console.error("No API key found. Please check key.txt file.");
+      }
+
+      const openai = new OpenAI({
+        apiKey: key,
+        dangerouslyAllowBrowser: true,
+      });
+
+      async function testPipeline(prompt) {
+        try {
+          console.log("Sending prompt:", prompt);
+
+          const response = await openai.chat.completions.create({
+            model: "gpt-4o-mini",
+            messages: [
+              {
+                role: "system",
+                content:
+                  "You will help develop Web components using HTML, CSS, and Javascript. Only respond with function calls using the provided tools. Always use 'body' as the selection for adding new elements.",
+              },
+              {
+                role: "user",
+                content: prompt,
+              },
+            ],
+            tools: Main.functionDeclarations.map((func) => ({
+              type: "function",
+              function: {
+                name: func.name,
+                description: func.parameters.description,
+                parameters: {
+                  type: "object",
+                  properties: func.parameters.properties,
+                  required: func.parameters.required,
+                },
+              },
+            })),
+            tool_choice: "auto",
+          });
+
+          console.log("OpenAI Response:", response);
+          const toolCalls = response.choices[0].message.tool_calls;
+          console.log("Tool calls:", toolCalls);
+
+          if (toolCalls && toolCalls.length > 0) {
+            for (const toolCall of toolCalls) {
+              const functionName = toolCall.function.name;
+              const functionArgs = JSON.parse(toolCall.function.arguments);
+              console.log(
+                "Executing function:",
+                functionName,
+                "with args:",
+                functionArgs
+              );
+
+              try {
+                if (Main.functionMap[functionName]) {
+                  Main.functionMap[functionName](functionArgs);
+                } else {
+                  console.error("Function not found:", functionName);
+                }
+              } catch (error) {
+                console.error("Error executing function:", functionName, error);
+              }
+            }
+          } else {
+            console.log("No tool calls found");
+          }
+        } catch (error) {
+          console.error("OpenAI API Error:", error);
+        }
+      }
+
+      document.getElementById("test-form").addEventListener("submit", (e) => {
+        e.preventDefault();
+        const prompt = document.getElementById("test-input").value;
+        testPipeline(prompt);
+      });
+    </script>
+  </body>
+</html>
